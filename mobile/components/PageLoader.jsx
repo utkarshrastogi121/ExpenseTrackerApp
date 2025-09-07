@@ -1,9 +1,9 @@
 import { View, ActivityIndicator } from "react-native";
 import { styles } from "../assets/styles/home.styles";
-import { useTheme } from "../context/ThemeContext"; // 👈 import theme hook
+import { useTheme } from "../context/ThemeContext";
 
 const PageLoader = () => {
-  const { theme } = useTheme(); // 👈 get active theme
+  const { theme } = useTheme();
 
   return (
     <View style={styles.loadingContainer}>

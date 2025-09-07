@@ -18,15 +18,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { BalanceCard } from "../../components/BalanceCard";
 import { TransactionItem } from "../../components/TransactionItem";
 import NoTransactionsFound from "../../components/NoTransactionsFound";
-import { useTheme } from "../../context/ThemeContext"; // 👈 import theme hook
+import { useTheme } from "../../context/ThemeContext";
 
 const themeOrder = ["coffee", "forest", "purple", "ocean"];
 
 export default function Page() {
   const { user } = useUser();
   const router = useRouter();
-  const { theme, setTheme } = useTheme(); // 👈 get theme + setter
-  const [themeIndex, setThemeIndex] = useState(3); // default ocean
+  const { theme, setTheme } = useTheme();
+  const [themeIndex, setThemeIndex] = useState(3);
   const [refreshing, setRefreshing] = useState(false);
 
   const { transactions, summary, isLoading, loadData, deleteTransaction } =

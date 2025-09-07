@@ -5,12 +5,12 @@ import { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { styles } from "../../assets/styles/auth.styles";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../../context/ThemeContext"; // 👈 theme hook
+import { useTheme } from "../../context/ThemeContext";
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn();
   const router = useRouter();
-  const { theme } = useTheme(); // 👈 get active theme
+  const { theme } = useTheme();
 
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");

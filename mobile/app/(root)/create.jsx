@@ -12,7 +12,7 @@ import { useState } from "react";
 import { API_URL } from "../../constants/api";
 import { styles } from "../../assets/styles/create.styles";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "../../context/ThemeContext"; // 👈 import theme hook
+import { useTheme } from "../../context/ThemeContext";
 
 const CATEGORIES = [
   { id: "food", name: "Food & Drinks", icon: "fast-food" },
@@ -27,7 +27,7 @@ const CATEGORIES = [
 const CreateScreen = () => {
   const router = useRouter();
   const { user } = useUser();
-  const { theme } = useTheme(); // 👈 use theme
+  const { theme } = useTheme();
 
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");

@@ -2,9 +2,8 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { styles } from "../assets/styles/home.styles";
 import { formatDate } from "../lib/utils";
-import { useTheme } from "../context/ThemeContext"; // 👈 import theme hook
+import { useTheme } from "../context/ThemeContext";
 
-// Map categories to their respective icons
 const CATEGORY_ICONS = {
   "Food & Drinks": "fast-food",
   Shopping: "cart",
@@ -16,7 +15,7 @@ const CATEGORY_ICONS = {
 };
 
 export const TransactionItem = ({ item, onDelete }) => {
-  const { theme } = useTheme(); // 👈 grab active theme
+  const { theme } = useTheme();
   const isIncome = parseFloat(item.amount) > 0;
   const iconName = CATEGORY_ICONS[item.category] || "pricetag-outline";
 
@@ -27,7 +26,7 @@ export const TransactionItem = ({ item, onDelete }) => {
           <Ionicons
             name={iconName}
             size={22}
-            color={isIncome ? theme.income : theme.expense} // 👈 dynamic color
+            color={isIncome ? theme.income : theme.expense}
           />
         </View>
         <View style={styles.transactionLeft}>

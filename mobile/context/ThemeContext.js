@@ -1,6 +1,5 @@
-// context/ThemeContext.js
 import React, { createContext, useState, useContext } from "react";
-import { THEMES } from "../constants/colors"; // adjust path if needed
+import { THEMES } from "../constants/colors";
 
 const ThemeContext = createContext();
 

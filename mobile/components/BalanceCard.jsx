@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 import { styles } from "../assets/styles/home.styles";
-import { useTheme } from "../context/ThemeContext"; // 👈 import theme hook
+import { useTheme } from "../context/ThemeContext";
 
 export const BalanceCard = ({ summary }) => {
-  const { theme } = useTheme(); // 👈 get current theme
+  const { theme } = useTheme();
 
   return (
     <View

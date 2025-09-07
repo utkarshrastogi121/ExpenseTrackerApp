@@ -2,11 +2,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../assets/styles/home.styles";
 import { useRouter } from "expo-router";
-import { useTheme } from "../context/ThemeContext"; // 👈 import theme hook
+import { useTheme } from "../context/ThemeContext";
 
 const NoTransactionsFound = () => {
   const router = useRouter();
-  const { theme } = useTheme(); // 👈 get active theme
+  const { theme } = useTheme();
 
   return (
     <View style={styles.emptyState}>
