@@ -1,0 +1,1 @@
+export const API_URL = "https://expensetrackerapp-backend-pydb.onrender.com/api";

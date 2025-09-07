@@ -57,4 +57,4 @@ export const THEMES = {
   ocean: oceanTheme,
 };
 
-export const COLORS = THEMES.purple;
+export const COLORS = THEMES.ocean;
