@@ -13,9 +13,7 @@ export default function Page() {
     loadData();
   }, [loadData]);
 
-  console.log("userId", user.id)
-  console.log('Summary',summary)
-  console.log('transactions', transactions)
+  
 
   return (
     <View>
