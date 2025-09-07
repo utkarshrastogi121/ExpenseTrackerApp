@@ -4,7 +4,6 @@ import {
   Alert,
   TouchableOpacity,
   TextInput,
-  ActivityIndicatorBase,
   ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
@@ -12,8 +11,8 @@ import { useUser } from "@clerk/clerk-expo";
 import { useState } from "react";
 import { API_URL } from "../../constants/api";
 import { styles } from "../../assets/styles/create.styles";
-import { COLORS } from "../../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "../../context/ThemeContext"; // 👈 import theme hook
 
 const CATEGORIES = [
   { id: "food", name: "Food & Drinks", icon: "fast-food" },
@@ -28,6 +27,7 @@ const CATEGORIES = [
 const CreateScreen = () => {
   const router = useRouter();
   const { user } = useUser();
+  const { theme } = useTheme(); // 👈 use theme
 
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -36,18 +36,15 @@ const CreateScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCreate = async () => {
-    // validations
     if (!title.trim()) return Alert.alert("Error", "Please enter a transaction title");
     if (!amount || isNaN(parseFloat(amount)) || parseFloat(amount) <= 0) {
       Alert.alert("Error", "Please enter a valid amount");
       return;
     }
-
     if (!selectedCategory) return Alert.alert("Error", "Please select a category");
 
     setIsLoading(true);
     try {
-      // Format the amount (negative for expenses, positive for income)
       const formattedAmount = isExpense
         ? -Math.abs(parseFloat(amount))
         : Math.abs(parseFloat(amount));
@@ -67,7 +64,6 @@ const CreateScreen = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(errorData);
         throw new Error(errorData.error || "Failed to create transaction");
       }
 
@@ -75,98 +71,110 @@ const CreateScreen = () => {
       router.back();
     } catch (error) {
       Alert.alert("Error", error.message || "Failed to create transaction");
-      console.error("Error creating transaction:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       {/* HEADER */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color={COLORS.text} />
+          <Ionicons name="arrow-back" size={24} color={theme.text} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>New Transaction</Text>
+        <Text style={[styles.headerTitle, { color: theme.text }]}>New Transaction</Text>
         <TouchableOpacity
           style={[styles.saveButtonContainer, isLoading && styles.saveButtonDisabled]}
           onPress={handleCreate}
           disabled={isLoading}
         >
-          <Text style={styles.saveButton}>{isLoading ? "Saving..." : "Save"}</Text>
-          {!isLoading && <Ionicons name="checkmark" size={18} color={COLORS.primary} />}
+          <Text style={[styles.saveButton, { color: theme.primary }]}>
+            {isLoading ? "Saving..." : "Save"}
+          </Text>
+          {!isLoading && <Ionicons name="checkmark" size={18} color={theme.primary} />}
         </TouchableOpacity>
       </View>
 
-      <View style={styles.card}>
+      <View style={[styles.card, { backgroundColor: theme.cardBackground }]}>
+        {/* TYPE SELECTOR */}
         <View style={styles.typeSelector}>
           {/* EXPENSE SELECTOR */}
           <TouchableOpacity
-            style={[styles.typeButton, isExpense && styles.typeButtonActive]}
+            style={[styles.typeButton, isExpense && { backgroundColor: theme.expense }]}
             onPress={() => setIsExpense(true)}
           >
             <Ionicons
               name="arrow-down-circle"
               size={22}
-              color={isExpense ? COLORS.white : COLORS.expense}
+              color={isExpense ? theme.white : theme.expense}
               style={styles.typeIcon}
             />
-            <Text style={[styles.typeButtonText, isExpense && styles.typeButtonTextActive]}>
+            <Text
+              style={[
+                styles.typeButtonText,
+                { color: isExpense ? theme.white : theme.expense },
+              ]}
+            >
               Expense
             </Text>
           </TouchableOpacity>
 
           {/* INCOME SELECTOR */}
           <TouchableOpacity
-            style={[styles.typeButton, !isExpense && styles.typeButtonActive]}
+            style={[styles.typeButton, !isExpense && { backgroundColor: theme.income }]}
             onPress={() => setIsExpense(false)}
           >
             <Ionicons
               name="arrow-up-circle"
               size={22}
-              color={!isExpense ? COLORS.white : COLORS.income}
+              color={!isExpense ? theme.white : theme.income}
               style={styles.typeIcon}
             />
-            <Text style={[styles.typeButtonText, !isExpense && styles.typeButtonTextActive]}>
+            <Text
+              style={[
+                styles.typeButtonText,
+                { color: !isExpense ? theme.white : theme.income },
+              ]}
+            >
               Income
             </Text>
           </TouchableOpacity>
         </View>
 
-        {/* AMOUNT CONTAINER */}
+        {/* AMOUNT INPUT */}
         <View style={styles.amountContainer}>
-          <Text style={styles.currencySymbol}>₹</Text>
+          <Text style={[styles.currencySymbol, { color: theme.text }]}>₹</Text>
           <TextInput
-            style={styles.amountInput}
+            style={[styles.amountInput, { color: theme.text }]}
             placeholder="0.00"
-            placeholderTextColor={COLORS.textLight}
+            placeholderTextColor={theme.textSecondary}
             value={amount}
             onChangeText={setAmount}
             keyboardType="numeric"
           />
         </View>
 
-        {/* INPUT CONTAINER */}
+        {/* TITLE INPUT */}
         <View style={styles.inputContainer}>
           <Ionicons
             name="create-outline"
             size={22}
-            color={COLORS.textLight}
+            color={theme.textSecondary}
             style={styles.inputIcon}
           />
           <TextInput
-            style={styles.input}
+            style={[styles.input, { color: theme.text }]}
             placeholder="Transaction Title"
-            placeholderTextColor={COLORS.textLight}
+            placeholderTextColor={theme.textSecondary}
             value={title}
             onChangeText={setTitle}
           />
         </View>
 
-        {/* TITLE */}
-        <Text style={styles.sectionTitle}>
-          <Ionicons name="pricetag-outline" size={16} color={COLORS.text} /> Category
+        {/* CATEGORY */}
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>
+          <Ionicons name="pricetag-outline" size={16} color={theme.text} /> Category
         </Text>
 
         <View style={styles.categoryGrid}>
@@ -175,20 +183,25 @@ const CreateScreen = () => {
               key={category.id}
               style={[
                 styles.categoryButton,
-                selectedCategory === category.name && styles.categoryButtonActive,
+                selectedCategory === category.name && {
+                  backgroundColor: theme.primary,
+                },
               ]}
               onPress={() => setSelectedCategory(category.name)}
             >
               <Ionicons
                 name={category.icon}
                 size={20}
-                color={selectedCategory === category.name ? COLORS.white : COLORS.text}
+                color={selectedCategory === category.name ? theme.white : theme.text}
                 style={styles.categoryIcon}
               />
               <Text
                 style={[
                   styles.categoryButtonText,
-                  selectedCategory === category.name && styles.categoryButtonTextActive,
+                  {
+                    color:
+                      selectedCategory === category.name ? theme.white : theme.text,
+                  },
                 ]}
               >
                 {category.name}
@@ -200,7 +213,7 @@ const CreateScreen = () => {
 
       {isLoading && (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
+          <ActivityIndicator size="large" color={theme.primary} />
         </View>
       )}
     </View>
