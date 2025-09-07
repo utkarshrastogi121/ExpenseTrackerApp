@@ -18,6 +18,11 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5001;
 
+app.get("/", (req, res) => {
+  res.send("🚀 Expense Tracker API is running");
+});
+
+
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
