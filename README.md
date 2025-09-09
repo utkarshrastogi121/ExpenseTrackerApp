@@ -40,9 +40,11 @@ This app helps you manage your personal finances by tracking income and expenses
 
 ## 📷 Screenshots
 
-<img src="https://github.com/utkarshrastogi121/ExpenseTrackerApp/blob/main/mobile/assets/images/first.jpg" alt="Login Screen" width="300"/>
-<img src="https://github.com/utkarshrastogi121/ExpenseTrackerApp/blob/main/mobile/assets/images/second.jpg" alt="Login Screen" width="300"/>
-<img src="https://github.com/utkarshrastogi121/ExpenseTrackerApp/blob/main/mobile/assets/images/third.jpg" alt="Login Screen" width="300"/>
+<p align="center">
+  <img src="https://github.com/utkarshrastogi121/ExpenseTrackerApp/blob/main/mobile/assets/images/first.jpg" alt="Login Screen" width="250"/>
+  <img src="https://github.com/utkarshrastogi121/ExpenseTrackerApp/blob/main/mobile/assets/images/second.jpg" alt="Dashboard" width="250"/>
+  <img src="https://github.com/utkarshrastogi121/ExpenseTrackerApp/blob/main/mobile/assets/images/third.jpg" alt="Add Transaction" width="250"/>
+</p>
 
 ---
 
